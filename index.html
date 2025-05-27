@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Biocerto.AI Chatbot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f2f7f2;
+    }
+
+    /* Pulsante flottante */
+    #chatToggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #1A4A72;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 12px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      z-index: 9999;
+    }
+
+    /* Su mobile sposta il bottone in alto */
+    @media (max-width: 600px) {
+      #chatToggle {
+        top: 20px;
+        bottom: auto;
+      }
+
+      .chatbox-container {
+        top: 70px;
+        bottom: auto;
+      }
+    }
+
+    .chatbox-container {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      display: none;
+      z-index: 9998;
+    }
+
+    .chatbox {
+      width: 420px;
+      max-width: 95vw;
+      height: 600px;
+      border: 2px solid #1A4A72;
+      border-radius: 15px;
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .logo img {
+      width: 90px;
+      height: auto;
+    }
+
+    .chatlog {
+      flex: 1;
+      overflow-y: auto;
+      margin-bottom: 12px;
+      font-size: 16px;
+    }
+
+    .chatlog div {
+      margin: 6px 0;
+    }
+
+    .user {
+      text-align: right;
+      color: #333;
+    }
+
+    .bot {
+      text-align: left;
+      color: #1A4A72;
+    }
+
+    input {
+      width: calc(100% - 20px);
+      padding: 12px;
+      font-size: 15px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Bottone flottante con testo -->
+  <button id="chatToggle">Biocerto-AI</button>
+
+  <!-- Contenitore del chatbot -->
+  <div class="chatbox-container" id="chatContainer">
+    <div class="chatbox">
+      <div class="logo">
+        <img src="https://www.biocerto.it/wp-content/uploads/2022/11/logo-original-500-1920w.png" alt="Logo Biocerto">
+      </div>
+      <div class="chatlog" id="chatlog">
+        <div class="bot"><strong>Biocerto.AI:</strong> Ciao! Questa è una versione demo del tuo assistente virtuale Biocerto.AI. Presto ti guiderò nella scelta dei migliori prodotti agroalimentari certificati del Made in Italy. Come posso aiutarti?</div>
+      </div>
+      <input type="text" id="userInput" placeholder="Scrivi qui..." onkeydown="if(event.key === 'Enter') sendMessage()">
+    </div>
+  </div>
+
+  <script>
+    const chatToggle = document.getElementById("chatToggle");
+    const chatContainer = document.getElementById("chatContainer");
+
+    chatToggle.addEventListener("click", () => {
+      chatContainer.style.display = chatContainer.style.display === "none" || chatContainer.style.display === "" ? "block" : "none";
+    });
+
+    function sendMessage() {
+      const input = document.getElementById("userInput");
+      const message = input.value.trim();
+      if (!message) return;
+
+      const chatlog = document.getElementById("chatlog");
+
+      const userMsg = document.createElement("div");
+      userMsg.className = "user";
+      userMsg.innerHTML = `<strong>Tu:</strong> ${message}`;
+      chatlog.appendChild(userMsg);
+
+      const botMsg = document.createElement("div");
+      botMsg.className = "bot";
+      botMsg.innerHTML = `<strong>Biocerto.AI:</strong> Io sono Biocerto.AI, l'assistente AI per il Made in Italy agroalimentare. Sto ancora ampliando la mia conoscenza, ma presto sarò pronto per rispondere a tutte le tue domande su vini, cibi sani e prodotti certificati italiani!`;
+      chatlog.appendChild(botMsg);
+
+      chatlog.scrollTop = chatlog.scrollHeight;
+      input.value = "";
+    }
+  </script>
+
+</body>
+</html>
